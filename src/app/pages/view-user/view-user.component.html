@@ -1,0 +1,25 @@
+<section class=" contenedor">
+    <div class="contenedor__img d-flex justify-content-center">
+        <img class="image w-75 img-fluid "  [src]="user?.image" alt="Imagen de  {{user?.first_name}} ">
+    </div>
+
+    <div class="d-flex flex-column align-content-center contenedor__datos ">
+        <h3>{{user?.first_name}} </h3>
+        <h3>{{user?.last_name}} </h3>
+        <p class="fw-bold" >Nombre Usuario: <span class="fw-normal">{{user?.username}}</span> </p>
+        <p class="fw-bold">Email: <span class="fw-normal"> {{user?.email}} </span> </p>
+        <div class="d-flex justify-content-evenly   p-1">
+            <a class="d-flex flex-column" (click)="deleteUser(user._id,user.first_name,user.last_name)"> <img class="img" [src]="getImageTrash()" alt="">
+                <p>Eliminar</p>
+            </a>
+            <a  class="d-flex flex-column align-content-center" [routerLink]="['/updateuser',user._id]"> <img class="img" [src]="getImageUpdate()" alt="">
+                <p>Actualizar</p>
+            </a>
+            <a  class="anchor" [routerLink]="['/']" > <img class="img " [src]="getImageGlass()" alt="">
+                <p>Volver al listado </p>
+            </a>
+            
+       </div>
+
+    </div>
+</section>
