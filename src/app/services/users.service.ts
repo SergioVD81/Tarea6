@@ -16,11 +16,18 @@ export class UsersService {
   getAll(page: number) {
     return this.httpClient.get<Datas>(`${this.url}?page=${page}`);
   }
-  getById(id:string){
-    return this.httpClient.get<User>(`${this.url}${id}`)
+  getById(id: string) {
+    return this.httpClient.get<User>(`${this.url}${id}`);
   }
-
-  deleteById(iduser:string):Promise<any>{
-    return lastValueFrom(this.httpClient.delete(`${this.url}${iduser}`))
+  createNewUsert(formValue: User): Promise<User> {
+    return lastValueFrom(this.httpClient.post<User>(this.url, formValue));
+  }
+  updateUser(id: string, formValue: User): Promise<User> {
+    return lastValueFrom(
+      this.httpClient.put<User>(`${this.url}${id}`, formValue)
+    );
+  }
+  deleteById(iduser: string): Promise<any> {
+    return lastValueFrom(this.httpClient.delete(`${this.url}${iduser}`));
   }
 }

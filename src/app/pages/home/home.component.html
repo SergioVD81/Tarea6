@@ -1,5 +1,21 @@
-<section class="row g-2">
+<section class="mt-5 row g-2">
     <article class="col-12 col-md-6 col-lg-3" *ngFor="let user of getArrayUser()">
         <app-card-users [users]="user"></app-card-users>
     </article>
 </section>
+<footer class="mt-4 d-flex justify-content-center ">
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination">
+            <li class="page-item">
+                <p class="page-link btn" (click)="pagination($event)">Previous</p>
+            </li>
+            <li class="page-item">
+                <p class="page-link">{{pag}} </p>
+            </li>
+
+            <li class="page-item">
+                <p class="page-link btn" (click)="pagination($event)">Next</p>
+            </li>
+        </ul>
+    </nav>
+</footer>
