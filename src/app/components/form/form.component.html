@@ -6,7 +6,7 @@
             <input class="form-control" type="text" id="name" placeholder="Introduzca nombre de Usuario"
                 formControlName="name">
             <small class="error" *ngIf="checkoutForm('name','required')">El campo es requerido</small>
-            <small class="error" *ngIf="checkoutForm('name','pattern')">El campo debe de tener al menos tres
+            <small class="error" *ngIf="checkoutForm('name','minlength')">El campo debe de tener al menos tres
                 caracteres</small>
         </div>
         <div class="mb-3">
@@ -14,7 +14,7 @@
             <input class="form-control" type="text" id="lastName" placeholder="Introduzca apellido de Usuario"
                 formControlName="lastName">
             <small class="error" *ngIf="checkoutForm('lastName','required')">El campo es requerido</small>
-            <small class="error" *ngIf="checkoutForm('lastName','pattern')">El campo debe de tener al menos tres
+            <small class="error" *ngIf="checkoutForm('lastName','minlength')">El campo debe de tener al menos tres
                 caracteres</small>
         </div>
         <div class="mb-3">
