@@ -8,8 +8,6 @@ import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 })
 export class UsersService {
   private httpClient = inject(HttpClient);
-  private arrayUsers: User[] = [];
-
   private url: string = 'https://peticiones.online/api/users/';
   constructor() {}
 

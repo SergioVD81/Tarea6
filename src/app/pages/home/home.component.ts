@@ -12,20 +12,20 @@ export class HomeComponent {
   private userService = inject(UsersService);
   private arrayUser: User[] = [];
   private data!: Datas;
+  total_page!: number;
   pag: number = 1;
   constructor() {}
 
   ngOnInit() {
     this.userService.getAll(this.pag).subscribe((data) => {
       this.arrayUser = data.results;
-      console.log(this.arrayUser);
+      this.total_page = data.total_pages;
     });
   }
   getArrayUser(): User[] {
     return this.arrayUser;
   }
   pagination($event: any) {
-    console.log($event.target.textContent);
     if (
       $event.target.textContent == 'Previous' &&
       this.pag > 1 &&
@@ -34,17 +34,15 @@ export class HomeComponent {
       this.pag--;
       this.userService.getAll(this.pag).subscribe((data) => {
         this.arrayUser = data.results;
-        console.log(this.arrayUser);
       });
     } else if (
       $event.target.textContent == 'Next' &&
       this.pag === 1 &&
-      this.pag < 3
+      this.pag < this.total_page + 1
     ) {
       this.pag++;
       this.userService.getAll(this.pag).subscribe((data) => {
         this.arrayUser = data.results;
-        console.log(this.arrayUser);
       });
     }
   }
