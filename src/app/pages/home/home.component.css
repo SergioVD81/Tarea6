@@ -1,0 +1,7 @@
+li {
+  width: 200px;
+  text-align: center;
+}
+li .btn {
+  cursor: pointer;
+}

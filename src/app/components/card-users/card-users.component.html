@@ -1,0 +1,15 @@
+<div class="card shadow">
+    <img class="photo" [src]="users.image" alt="Foto de una persona">
+    <p class="text-center">{{users.first_name}} {{users.last_name}} </p>
+    <div class="d-flex justify-content-around p-1">
+        <a [routerLink]="['/viewuser',users._id]" > <img class="img" [src]="getImageGlass()" alt="">
+            <p class="text-center">Ver Detalle</p>
+        </a>
+        <a [routerLink]="['/updateuser',users._id]"> <img class="img" [src]="getImageUpdate()" alt="">
+            <p class="text-center">Actualizar</p>
+        </a>
+        <a (click)="deleteUser(users._id,users.first_name,users.last_name)"> <img class="img" [src]="getImageTrash()" alt="">
+            <p class="text-center">Borrar</p>
+        </a>
+    </div>
+</div>
