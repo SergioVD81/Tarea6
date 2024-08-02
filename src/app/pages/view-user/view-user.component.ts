@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
 import { UsersService } from 'src/app/services/users.service';
 import { ICON } from 'src/assets/icon';
-import Swal from 'sweetalert2';
+import { confirm } from '../../helpers/popUp';
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',
@@ -17,6 +18,7 @@ export class ViewUserComponent {
   private imgTrash: string = ICON.trash;
   private update: string = ICON.update;
   private magnifying_glass: string = ICON.magnifying_glass;
+
   constructor() {}
 
   getImageTrash(): string {
@@ -29,39 +31,26 @@ export class ViewUserComponent {
     return this.magnifying_glass;
   }
   ngOnInit() {
-    this.activedRoute.params.subscribe((params: any) => {
+    this.activedRoute.params.subscribe(async (params: any) => {
       let iduser: string = params.iduser;
-
-      this.userSrevice.getById(iduser).subscribe((data) => {
-        this.user = data;
-      });
-    });
-  }
-
-  deleteUser(id: string, firstname: String, lastname: string) {
-    this.confirm(id, firstname, lastname);
-  }
-
-  confirm(id: string, firstname: String, lastname: string) {
-    Swal.fire({
-      title: `Estás seguro que deseas borrar el usuario ${firstname} ${lastname}?`,
-      text: '¡No podrás revertir esto!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Borrar usuario',
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const response = await this.userSrevice.deleteById(id);
-        console.log(response);
-        this.router.navigate(['/']);
-        Swal.fire({
-          title: 'Borrado!',
-          text: 'El usuario ha sido  borrado',
-          icon: 'success',
-        });
+      try {
+        this.user = await this.userSrevice.getById(iduser);
+      } catch (error) {
+        console.error(error);
       }
     });
+  }
+
+  async deleteUser(id: string, firstname: String, lastname: string) {
+    try {
+      const response = await this.userSrevice.deleteById(id);
+      await confirm(this.user, firstname, lastname);
+
+      if (response.id) {
+        this.router.navigate(['/']);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

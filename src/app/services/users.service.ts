@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Datas, User } from '../interfaces/user.interface';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,8 @@ export class UsersService {
   getAll(page: number) {
     return this.httpClient.get<Datas>(`${this.url}?page=${page}`);
   }
-  getById(id: string) {
-    return this.httpClient.get<User>(`${this.url}${id}`);
+  getById(id: string): Promise<User> {
+    return lastValueFrom(this.httpClient.get<User>(`${this.url}${id}`));
   }
   createNewUsert(formValue: User): Promise<User> {
     return lastValueFrom(this.httpClient.post<User>(this.url, formValue));

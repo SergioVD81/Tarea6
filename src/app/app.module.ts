@@ -10,8 +10,6 @@ import { FormComponent } from './components/form/form.component';
 import { CardUsersComponent } from './components/card-users/card-users.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
-import { NewUserComponent } from './pages/new-user/new-user.component';
-import { UpdateUserComponent } from './pages/update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +19,6 @@ import { UpdateUserComponent } from './pages/update-user/update-user.component';
     CardUsersComponent,
     HomeComponent,
     ViewUserComponent,
-    NewUserComponent,
-    UpdateUserComponent,
   ],
   imports: [
     BrowserModule,

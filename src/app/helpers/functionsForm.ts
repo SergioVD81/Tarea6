@@ -1,6 +1,5 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../interfaces/user.interface';
-import Swal from 'sweetalert2';
 
 export function form(idUser: string, formUser: FormGroup, user: User) {
   if (idUser === undefined) {
@@ -60,14 +59,4 @@ export function form(idUser: string, formUser: FormGroup, user: User) {
       []
     ));
   }
-}
-
-export function dialogBox(message: string): void {
-  Swal.fire({
-    position: 'top-end',
-    icon: 'success',
-    title: message,
-    showConfirmButton: false,
-    timer: 1500,
-  });
 }

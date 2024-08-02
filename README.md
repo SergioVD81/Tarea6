@@ -38,13 +38,11 @@ Con esta actividad se pretende poner en práctica lo aprendido sobre peticiones 
 
    - view-user: componente donde se podrá visualizar con detalles los datos del usuario.
 
-   - update-user: página donde se muestra el formulario rellenado con los datos del usario.
-
    - not-found: componente que indica que la página solicitada no es posible encontrarla.
 
 2. **Components:**
 
-   - form: componente donde se ha creado el formulario.
+   - form: componente donde se ha creado el formulario para crear un nuevo usuario o para actualizar un usuario existente.
 
    - card-user:elemento creado para la visualización de todos los usuarios.
 

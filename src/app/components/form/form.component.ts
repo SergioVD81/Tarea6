@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { form, dialogBox } from 'src/app/helpers/functionsForm';
+import { form } from 'src/app/helpers/functionsForm';
+import { dialogBox } from 'src/app/helpers/popUp';
 import { User } from 'src/app/interfaces/user.interface';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -18,7 +19,7 @@ export class FormComponent {
   private user!: User;
   private txtTitle: string = 'NUEVO USUARIO';
   private btnText: string = 'Guardar';
-
+  private response!: User;
   constructor() {
     this.formUser = new FormGroup(
       {
@@ -48,7 +49,7 @@ export class FormComponent {
   }
 
   ngOnInit() {
-    this.activedRoute.params.subscribe((params: any) => {
+    this.activedRoute.params.subscribe(async (params: any) => {
       let idUser: string = params.iduser;
 
       if (idUser === undefined) {
@@ -56,30 +57,31 @@ export class FormComponent {
         this.btnText = 'Guardar';
         this.formUser = form(idUser, this.formUser, this.user);
       } else {
-        this.userService.getById(idUser).subscribe((data) => {
-          this.user = data;
+        try {
+          this.user = await this.userService.getById(idUser);
           this.formUser = form(idUser, this.formUser, this.user);
-        });
-        this.txtTitle = 'ACTUALIZAR USUARIO';
-        this.btnText = 'Actualizar';
+          this.txtTitle = 'ACTUALIZAR USUARIO';
+          this.btnText = 'Actualizar';
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
   }
-
-  checkoutForm(field: string, value: string): boolean {
-    return this.formUser.get(field)?.hasError(value) &&
-      this.formUser.get(field)?.touched
-      ? true
-      : false;
+  getTitle(): string {
+    return this.txtTitle;
+  }
+  getTextBtn(): string {
+    return this.btnText;
   }
 
   async getDataForm() {
     if (this.btnText === 'Guardar') {
       try {
-        const response = await this.userService.createNewUsert(
+        this.response = await this.userService.createNewUsert(
           this.formUser.value
         );
-        if (response.id) {
+        if (this.response.id) {
           let message: string = 'El usuario se ha guardado correctamente';
           dialogBox(message);
           this.formUser.reset();
@@ -90,11 +92,12 @@ export class FormComponent {
       }
     } else {
       try {
-        const response = await this.userService.updateUser(
+        this.response = await this.userService.updateUser(
           this.formUser.value._id,
           this.formUser.value
         );
-        if (response.id) {
+
+        if (this.response.id) {
           let message: string = 'El usuario se ha actualizado correctamente';
           dialogBox(message);
           this.router.navigate(['/']);
@@ -104,10 +107,10 @@ export class FormComponent {
       }
     }
   }
-  getTitle(): string {
-    return this.txtTitle;
-  }
-  getTextBtn(): string {
-    return this.btnText;
+  checkoutForm(field: string, value: string): boolean {
+    return this.formUser.get(field)?.hasError(value) &&
+      this.formUser.get(field)?.touched
+      ? true
+      : false;
   }
 }
